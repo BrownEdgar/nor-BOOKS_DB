@@ -31,7 +31,7 @@ const OutlinedTextFields = () => {
     discription:"",
     price:""
   });
-   const addUsers = (event) => {
+   const addBooks = (event) => {
     event.preventDefault();
     console.log("values", values);
     setValues([ {
@@ -41,7 +41,6 @@ const OutlinedTextFields = () => {
 
   const handleChange = name => event => {
 	setValues({ ...values, [name]: event.target.value });
-  console.log(event.target.value);
   };
 
   const saveData = () => {
@@ -68,7 +67,7 @@ const OutlinedTextFields = () => {
         label="Author Full Name"
         className={classes.textField}
         value={values.name}
-        onChange={handleChange('name')}
+        onChange={handleChange('author')}
         margin="normal"
         name="author"
         variant="outlined"
@@ -81,6 +80,7 @@ const OutlinedTextFields = () => {
         defaultValue="foo"
         className={classes.textField}
         margin="normal"
+        onChange={handleChange('bookstitle')}
         name="bookstitle"
         variant="outlined"
       />
@@ -90,6 +90,7 @@ const OutlinedTextFields = () => {
         label="Prise"
         type="number"
         className={classes.textField}
+         onChange={handleChange('price')}
         margin="normal"
         name="price"
         variant="outlined"
@@ -103,6 +104,7 @@ const OutlinedTextFields = () => {
         columns='10'
         name="discription"
         defaultValue="Your Discription"
+         onChange={handleChange('discription')}
         className={classes.textField}
         margin="normal"
         variant="outlined"

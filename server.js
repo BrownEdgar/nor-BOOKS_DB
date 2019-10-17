@@ -69,7 +69,7 @@ app.get('/api/addbooks', async (req, res) => {
 
 app.post('/api/addbooks', async (req, res) => {
 //BOOK VALIDATION 
-console.log(req.body);
+console.log("addBooks body",req.body);
 const { error } = registerValidation(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
 	//check user in db 

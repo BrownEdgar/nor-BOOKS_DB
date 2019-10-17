@@ -33,9 +33,9 @@ const Customers = () => {
   	<ol>
     {
     	books.map(books => {
-    	return ( <li  key = {books._id}>
+    	return ( <li key={books._id}>
 		{books.author}:
-		{books.bookstitle} <Buttons/></li>)
+		{books.bookstitle}<Buttons/></li>)
 		})}
   	</ol>
     </div>
