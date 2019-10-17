@@ -17,6 +17,21 @@ const registerValidation = data =>{
 	};
 	return Joi.validate(data, schema);
 }
+const registerValidation2 = data =>{	
+	const schema = {
+		name:Joi.string()
+			.min(4)
+			.required(),
+		email:Joi.string()
+			.min(2)
+			.email()
+			.required(),
+		password:Joi.string()
+			.min(6)
+			.required()		
+	};
+	return Joi.validate(data, schema);
+}
 const loginValidation = data =>{	
 	const schema = {
 		email:Joi.string()
@@ -41,5 +56,6 @@ const bookSearchValidation = data =>{
 
 
 module.exports.registerValidation = registerValidation;
+module.exports.registerValidation2 = registerValidation2;
 module.exports.loginValidation = loginValidation;
 module.exports.bookSearchValidation = bookSearchValidation;

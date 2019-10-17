@@ -1,5 +1,5 @@
 import React from 'react';
-import clsx from 'clsx';
+/*import clsx from 'clsx';*/
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     justifyContent:"center",
+    alignItems: "center",
     marginTop:"5%",
     flexWrap: 'wrap',
   },
@@ -25,6 +26,10 @@ const useStyles = makeStyles(theme => ({
   dense: {
     marginTop: theme.spacing(2),
   },
+  button: {
+     margin: theme.spacing(1),
+     padding: theme.spacing(2),
+  },
   menu: {
     width: 200,
   },
@@ -34,12 +39,23 @@ export default function OutlinedTextFields() {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     name: 'Enter You name here',
-    age: '',
+    email: '',
+    password: ''
   });
+   const addUsers = (event) => {
+    event.preventDefault();
+    console.log("values", values);
+    setValues([ {
+      event
+    }])
+  }
 
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
-  };
+   const handleOnChange = name=>(event) => {
+    
+        setValues({
+            ...values, [event.target.name]: event.target.value
+        })
+    };
  const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
@@ -47,16 +63,34 @@ export default function OutlinedTextFields() {
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
+  const saveData = () => {
+          fetch('/register',{
+            method: 'POST',
+            headers: {
+        
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        })
+            .then(res => res.json())
+            .then((res) => {
+                console.log(res);
+            })
+            .catch(res => console.log(res));
+    };
+
   return (
-    <form className={classes.container} noValidate autoComplete="off">
+    <form className={classes.container} noValidate autoComplete="off" method="post">
       <TextField
         required
-        id="outlined-name"
+        id="name"
         label="Name"
         className={classes.textField}
         value={values.name}
-        onChange={handleChange('name')}
+        onChange={handleOnChange('name')}
         margin="normal"
+        name="name"
         variant="outlined"
       />
       <TextField
@@ -66,18 +100,22 @@ export default function OutlinedTextFields() {
         className={classes.textField}
         type="email"
         name="email"
+        onChange={handleOnChange('email')}
         autoComplete="email"
         margin="normal"
         variant="outlined"
       />
            <TextField
+           required
         id="outlined-adornment-password"
-        className={clsx(classes.margin, classes.textField)}
+        className={classes.textField}
         variant="outlined"
         type={values.showPassword ? 'text' : 'password'}
         label="Password"
+        margin="normal"
+        name="password"
         value={values.password}
-        onChange={handleChange('password')}
+        onChange={handleOnChange('password')}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -102,6 +140,16 @@ export default function OutlinedTextFields() {
         margin="normal"
         variant="outlined"
       />
+      <Button 
+      variant="contained" 
+      color="primary" 
+      type='submit'
+      className={classes.button} 
+      onClick={saveData}
+      href="/register"
+      size="large">
+        Register
+      </Button>
  </form>
   );
 }

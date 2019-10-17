@@ -71,7 +71,7 @@ export default function CustomizedMenus() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-       <Link href="/">
+       <Link href="/api/addbooks">
         <StyledMenuItem>
           <ListItemIcon>
             <HomeIcon fontSize="small" />
@@ -79,7 +79,7 @@ export default function CustomizedMenus() {
           <ListItemText primary="Home" />
         </StyledMenuItem>
        </Link>
-      <Link href="register">
+      <Link href="/register">
         <StyledMenuItem>
           <ListItemIcon>
             <VpnKeyIcon fontSize="small" />

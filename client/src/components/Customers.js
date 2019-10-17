@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-/*import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';*/
+// import Paper from '@material-ui/core/Paper';
+// import Grid from '@material-ui/core/Grid';
 import Buttons from './Buttons';
 
 const Customers = () => {
+
   const [books, setBooks] = useState([
 	    fetch('/api/addbooks')
 	    	.then(res => res.json())
@@ -11,11 +12,11 @@ const Customers = () => {
 	    	books
 	    	}]), () => console.log('fetched...!!', books))
   ]);
-  const addBooks = (title) => {
+/*  const addBooks = (title) => {
   	setBooks([...books, {
   		title
   	}])
-  }
+  }*/
 
     const divStyle = {
   display: 'flex',
@@ -34,7 +35,7 @@ const Customers = () => {
     	books.map(books => {
     	return ( <li  key = {books._id}>
 		{books.author}:
-		{books.bookstitle} <Buttons id={books._id}/></li>)
+		{books.bookstitle} <Buttons/></li>)
 		})}
   	</ol>
     </div>

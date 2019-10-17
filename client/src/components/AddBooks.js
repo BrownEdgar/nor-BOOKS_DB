@@ -1,18 +1,20 @@
 import React, { useState,useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    display: 'flex',
+     display: 'flex',
+    justifyContent:"center",
+    alignItems: "center",
+    marginTop:"5%",
     flexWrap: 'wrap',
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-  },
-  dense: {
-    marginTop: theme.spacing(2),
   },
   menu: {
     width: 200,
@@ -23,31 +25,41 @@ const OutlinedTextFields = () => {
 
   const classes = useStyles();
 
-    const [books, setBooks] = useState([
-      fetch('/api/addbooks',{
-        method:'Post',
-        heders:{
-          "Accept":"application/json",
-          "Content-Type":"application/json"
-        }
-      })
-        .then(res => res.json())
-        .then(books => setBooks([...books, {
-        books
-        }]), () => console.log('fetched...!!', books))
-  ]);
-  const [values, setValues] = useState({
-    name: 'H.Tumanyan',
+     const [values, setValues] = React.useState({
+    author:"",
+    bookstitle:"",
+    discription:"",
+    price:""
   });
-useEffect(() => {
-        console.log("use Effect ran",books );
-    }, [books])
+   const addUsers = (event) => {
+    event.preventDefault();
+    console.log("values", values);
+    setValues([ {
+      event
+    }])
+  }
 
   const handleChange = name => event => {
 	setValues({ ...values, [name]: event.target.value });
   console.log(event.target.value);
   };
 
+  const saveData = () => {
+          fetch('/api/addbooks',{
+            method: 'POST',
+            headers: {
+        
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        })
+            .then(res => res.json())
+            .then((res) => {
+                console.log(res);
+            })
+            .catch(res => console.log(res));
+    };
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
@@ -95,6 +107,16 @@ useEffect(() => {
         margin="normal"
         variant="outlined"
       />
+         <Button 
+      variant="contained" 
+      color="primary" 
+      type='submit'
+      className={classes.button} 
+      onClick={saveData}
+      href="/api/addbooks"
+      size="medium">
+        Add Books
+      </Button>
     </form>
   );
 }

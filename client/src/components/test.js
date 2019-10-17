@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 //components add
 import AddBooks from './AddBooks';
 import AllBooksTitle from './Customers';
-import EditBook from './EditBook';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
