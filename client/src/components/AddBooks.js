@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
+
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -25,20 +25,12 @@ const OutlinedTextFields = () => {
 
   const classes = useStyles();
 
-     const [values, setValues] = React.useState({
+     const [values, setValues] = useState({
     author:"",
     bookstitle:"",
     discription:"",
     price:""
   });
-   const addBooks = (event) => {
-    event.preventDefault();
-    console.log("values", values);
-    setValues([ {
-      event
-    }])
-  }
-
   const handleChange = name => event => {
 	setValues({ ...values, [name]: event.target.value });
   };

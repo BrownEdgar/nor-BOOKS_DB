@@ -4,7 +4,6 @@ import React, {useState} from 'react';
 import Buttons from './Buttons';
 
 const Customers = () => {
-
   const [books, setBooks] = useState([
 	    fetch('/api/addbooks')
 	    	.then(res => res.json())
@@ -12,11 +11,7 @@ const Customers = () => {
 	    	books
 	    	}]), () => console.log('fetched...!!', books))
   ]);
-/*  const addBooks = (title) => {
-  	setBooks([...books, {
-  		title
-  	}])
-  }*/
+
 
     const divStyle = {
   display: 'flex',
@@ -25,18 +20,26 @@ const Customers = () => {
   fontWeight: "700",
   fontSize: "16px",
 };
+const removeBooks = (title) => {
+	
+	console.log("removeBooks start", title);
+	
+const newbook = [...books];
+newbook.splice(title, 1);
+setBooks(newbook);
+console.log("removeBooks end");
+  }
+
     return (
-    < div className = "App"
-    style = {
-    	divStyle
-    }>
+    < div className = "App" style = {divStyle}>
   	<ol>
     {
-    	books.map(books => {
-    	return ( <li key={books._id}>
+    	books.map((books,index) => {
+    	return ( <li key={index}>
 		{books.author}:
-		{books.bookstitle}<Buttons/></li>)
-		})}
+		{books.bookstitle}<Buttons index={books._id} removeBooks={removeBooks}/></li > )
+		})
+	}
   	</ol>
     </div>
   );

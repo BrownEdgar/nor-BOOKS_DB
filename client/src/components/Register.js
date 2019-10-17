@@ -3,7 +3,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
@@ -42,13 +41,7 @@ export default function OutlinedTextFields() {
     email: '',
     password: ''
   });
-   const addUsers = (event) => {
-    event.preventDefault();
-    console.log("values", values);
-    setValues([ {
-      event
-    }])
-  }
+
 
    const handleOnChange = name=>(event) => {
     
