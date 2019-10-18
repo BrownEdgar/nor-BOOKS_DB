@@ -56,7 +56,8 @@ export default function OutlinedTextFields() {
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
-  const saveData = () => {
+  const saveData = (e) => {
+    e.preventDefault();
     console.log('saveData')
     fetch('/register', {
         method: 'post',

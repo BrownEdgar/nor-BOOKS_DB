@@ -35,8 +35,8 @@ router.post('/', async(req, res)=> {
 console.log("Log in!");
 res.redirect('api/addbooks');
 	//CREATE A TOKEN
-	/*const token = jwt.sign({_id:user._id}, process.env.TOKEN_SECRET);
-	res.header('auth-token',token).send(token);*/
+	const token = jwt.sign({_id:user._id}, process.env.TOKEN_SECRET);
+	res.header('auth-token',token).send(token);
 
 });
 module.exports = router;

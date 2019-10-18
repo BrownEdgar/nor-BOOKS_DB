@@ -18,6 +18,12 @@ mongoose.connect("mongodb://localhost:27017/Books",
 
 app.use(express.json());
 
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
+
 //route
 routerRegValidation = require('./routes/auth');
 routerLogValidation = require('./routes/login');
@@ -88,23 +94,29 @@ const book = new Books({
 			 res.status(400).send(error);
 		}
 });
+app.get("/edit", async function(req,res,next){
+	
+	console.log("bookid in node Get method",)
+	res.json({message:"edit GEt page Node"})
+});
 app.get("/edit/:id", async function(req,res,next){
 	const bookid = req.params.id;
-	console.log(bookid)
+	console.log("bookid in node Get method",bookid)
 	res.json({message:"edit GEt page Node"})
 });
 //midleware
-app.use("/edit/:id", async function(req,res,next){
-	const { error } = registerValidation(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
-	//check user in db 
-	const titleExist = await Books.findOne({bookstitle:req.body.bookstitle});
-	if (titleExist) return res.status(400).json({message:"This bookstitle alredy exists"});
-	next();
-});
+// app.use("/edit/:id", async function(req,res,next){
+// 	const { error } = registerValidation(req.body);
+// 	if (error) return res.status(400).send(error.details[0].message);
+// 	//check user in db 
+// 	const titleExist = await Books.findOne({bookstitle:req.body.bookstitle});
+// 	if (titleExist) return res.status(400).json({message:"This bookstitle alredy exists"});
+// 	next();
+// });
 
 // for Edit / Update Book status-work!(only POST methods?)
 app.post("/edit/:id", function(req, res,next){
+	console.log('node body',req.body)
   const bookid = req.params.id;
   Books.updateOne( {_id:bookid}, { $set:{
   	author:req.body.author,
@@ -113,10 +125,9 @@ app.post("/edit/:id", function(req, res,next){
 	price:req.body.price
   } } )
   .then(data=>{
-    res.redirect("/");
+    res.json({message:data});
   })
   .catch(err=>console.log(err));
-  res.send("Put")
 });
 
 //DELETE BOOK -status-work!

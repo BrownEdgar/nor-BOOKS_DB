@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 
 const useStyles = makeStyles(theme => ({
@@ -26,7 +27,7 @@ const EditBooks = ({index,editingBooks}) => {
   const classes = useStyles();
 
      const [values, setValues] = useState({
-    author:"",
+    author:"New author name",
     bookstitle:"",
     discription:"",
     price:""
@@ -35,17 +36,11 @@ const EditBooks = ({index,editingBooks}) => {
 	setValues({ ...values, [name]: event.target.value });
   };
 
-  const EditData = (id) => {
-	  let baseURL = '/edit/' + id;
-	  console.log(` Books which ID = '${id}' is edited!`);
-	  
-          fetch(baseURL, {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-        })
+  const EditData = () => {
+    let baseURL = 'http://localhost:5555/edit/5da9a1712f67f30588d00ab7';
+    console.log(values);
+    axios.post(baseURL, values)
+        
             .then((res) => {
                 console.log("then in EditButtons.js", res);
             })
@@ -53,21 +48,21 @@ const EditBooks = ({index,editingBooks}) => {
   };
   const multiEdited = (e) => {
     e.preventDefault();
-    EditData(index)
-    editingBooks(index)
+    EditData()
+
   }
   return (
     <div>
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
-      required
         id="outlined-name"
-        label="Author Full Name"
+        label="author"
         className={classes.textField}
-        value={values.name}
+        placeholder={values.author}
         onChange={handleChange('author')}
         margin="normal"
         name="author"
+        id="author"
         variant="outlined"
       />
     
@@ -75,9 +70,9 @@ const EditBooks = ({index,editingBooks}) => {
       required
         id="outlined-uncontrolled"
         label="Book Name"
-        defaultValue="foo"
         className={classes.textField}
         margin="normal"
+        placeholder={values.bookstitle}
         onChange={handleChange('bookstitle')}
         name="bookstitle"
         variant="outlined"
@@ -94,15 +89,13 @@ const EditBooks = ({index,editingBooks}) => {
         variant="outlined"
       />
            <TextField
-           required
         id="filled-multiline-static"
         label="Discription"
         multiline
         rows="4"
         columns='10'
         name="discription"
-        defaultValue="Your Discription"
-         onChange={handleChange('discription')}
+        onChange={handleChange('discription')}
         className={classes.textField}
         margin="normal"
         variant="outlined"
@@ -110,7 +103,7 @@ const EditBooks = ({index,editingBooks}) => {
          <Button 
       variant="contained" 
       color="primary" 
-      type='submit'
+      type='button'
       className={classes.button} 
       onClick = {multiEdited}
       size="medium">

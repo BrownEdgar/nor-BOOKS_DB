@@ -19,25 +19,18 @@ const EditBooksBtn = ({
 	}) => {
  const classes = useStyles();
 
-  const EditData = (id) => {
-	  let baseURL = '/edit/' + id;
-	  console.log(` Books which ID = '${id}' is edited!`);
-	  
-          fetch(baseURL, {
+  const EditData = () => {
+          fetch("/edit", {
             method: 'get',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
               },
         })
-            .then((res) => {
-                console.log("then in EditButtons.js", res);
-            })
-            .catch(res => console.log("editbooks chatch", res));
 	};
 
   const multiEdited = () => {
-    EditData(index)
+    EditData()
     editingBooks(index)
   }
   return (
