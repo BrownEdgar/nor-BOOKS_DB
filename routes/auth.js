@@ -10,13 +10,12 @@ const { registerValidation2} = require('../validation');
 
 
 router.get('/', async(req, res)=> {
-	res.send('Regiter page')
+	res.json({message:'Regiter page'});
 });
 
 
 router.post('/',async(req, res)=> {
 	//DATA VALIDATE BEFORE MAKE A USER
-	console.log(req.body);
 		//hash password
 	const salt = await bcrypt.genSalt(10);
 	const hashPassword = await bcrypt.hash(req.body.password, salt);
@@ -27,17 +26,17 @@ router.post('/',async(req, res)=> {
 		password:hashPassword,
 	});
 const { error } = registerValidation2(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
+	if (error) return res.status(400).json({message:error.details[0].message});
 	//check user in db 
 	const emailExist = await User.findOne({email:req.body.email});
-	if (emailExist) return res.status(400).send("email alredy exists");
+	if (emailExist) return res.status(400).json({message:"email alredy exists"});
 
 
 	try {
 			const savedUSer = await user.save();
-			res.send({user:user._id});
+			res.json({user:user._id});
 		} catch (error) {
-			 res.status(400).send(error);
+			 res.status(400).json({messsage:error});
 		}
 });
 module.exports = router;

@@ -5,6 +5,7 @@ import test from './components/test';
 import Register from './components/Register';
 import Login from './components/Login';
 import Menu from './components/Menu';
+import EditBook from './components/EditBooks';
 
 
 class App extends Component {
@@ -13,12 +14,12 @@ class App extends Component {
  
     <div className="App">
    <h1>Create Your Books DB</h1>
-
       <Router>  
       <Menu />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <Route  exact  path="/api/addbooks" component={test} />
+        <Route  exact  path="/edit" component={EditBook} />
       </Router> 
     </div>
     

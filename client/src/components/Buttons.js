@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -21,7 +21,7 @@ const ContainedButtons = ({
 
   const DeleteData = (id) => {
 	  let baseURL = '/delete/' + id;
-	  console.log('baseURL', baseURL);
+	  console.log(` Books which ID = '${id}' is deleted!`);
 	  
           fetch(baseURL, {
             method: 'delete',
@@ -31,22 +31,21 @@ const ContainedButtons = ({
             })
             .catch(res => console.log(res));
 	};
-	const multiplay = ()=>{
-		DeleteData(index);
-		removeBooks(index)
-	}
+
+  const multiDeleted = (e) => {
+    e.preventDefault();
+    DeleteData(index)
+    removeBooks(index)
+  }
+
 
   return (
     <div>
-      <Button variant="contained" color="primary" className={classes.button}>
-        Edit
-      </Button>
       < Button 
       variant = "contained"
-	  onClick = {multiplay}
       color = "secondary"
       className = {classes.button}
-      >
+      onClick = {multiDeleted}>
         Delete
       </Button>
     </div>

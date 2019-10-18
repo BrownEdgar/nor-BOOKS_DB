@@ -57,21 +57,22 @@ export default function OutlinedTextFields() {
     event.preventDefault();
   };
   const saveData = () => {
-          fetch('/register',{
-            method: 'POST',
-            headers: {
-        
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(values)
-        })
-            .then(res => res.json())
-            .then((res) => {
-                console.log(res);
-            })
-            .catch(res => console.log(res));
-    };
+    console.log('saveData')
+    fetch('/register', {
+        method: 'post',
+        headers: {
+
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      })
+      .then(res => res.json())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(res => console.log('catch', res));
+  };
 
   return (
     <form className={classes.container} noValidate autoComplete="off" method="post">

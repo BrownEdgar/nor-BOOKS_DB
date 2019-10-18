@@ -1,55 +1,55 @@
 const Joi = require('@hapi/joi');
 // REGISTER VALIDATION
-const registerValidation = data =>{	
+const registerValidation = data => {
 	const schema = {
-		author:Joi.string()
+		author: Joi.string()
 			.min(4)
 			.required(),
-		bookstitle:Joi.string()
+		bookstitle: Joi.string()
 			.min(2)
 			.required(),
-		discription:Joi.string()
+		discription: Joi.string()
 			.min(6)
 			.required(),
-		price:Joi.number()
-		.min(1)
-		.required()		
+		price: Joi.number()
+			.min(1)
+			.required()
 	};
 	return Joi.validate(data, schema);
 }
-const registerValidation2 = data =>{	
+const registerValidation2 = data => {
 	const schema = {
-		name:Joi.string()
+		name: Joi.string()
 			.min(4)
 			.required(),
-		email:Joi.string()
+		email: Joi.string()
 			.min(2)
 			.email()
 			.required(),
-		password:Joi.string()
+		password: Joi.string()
 			.min(6)
-			.required()		
+			.required()
 	};
 	return Joi.validate(data, schema);
 }
-const loginValidation = data =>{	
+const loginValidation = data => {
 	const schema = {
-		email:Joi.string()
+		email: Joi.string()
 			.min(6)
 			.required()
 			.email(),
-		password:Joi.string()
+		password: Joi.string()
 			.min(6)
-			.required()		
+			.required()
 	};
 	return Joi.validate(data, schema);
 }
-const bookSearchValidation = data =>{	
+const bookSearchValidation = data => {
 	const schema = {
-		author:Joi.string()
+		author: Joi.string()
 			.min(3),
-			discription:Joi.string()
-			.min(5),
+		discription: Joi.string()
+			.min(5)
 	};
 	return Joi.validate(data, schema);
 }

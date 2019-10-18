@@ -62,8 +62,7 @@ app.get("/author/:name", function(req, res){
 
 app.get('/api/addbooks', async (req, res) => {
 	let c = await Books.find();
-	
-	res.send(c);
+	res.json(c);
 	
 });
 
@@ -71,10 +70,10 @@ app.post('/api/addbooks', async (req, res) => {
 //BOOK VALIDATION 
 console.log("addBooks body",req.body);
 const { error } = registerValidation(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
+	if (error) return res.status(400).json({massage: error.details[0].message});
 	//check user in db 
 	const bExist = await Books.findOne({bookstitle:req.body.bookstitle});
-	if (bExist) return res.status(400).send("This bookstitle alredy exists");
+	if (bExist) return res.status(400).json({massage:"This bookstitle alredy exists"});
 
 const book = new Books({
 		author:req.body.author,
@@ -89,19 +88,23 @@ const book = new Books({
 			 res.status(400).send(error);
 		}
 });
-
+app.get("/edit/:id", async function(req,res,next){
+	const bookid = req.params.id;
+	console.log(bookid)
+	res.json({message:"edit GEt page Node"})
+});
 //midleware
 app.use("/edit/:id", async function(req,res,next){
 	const { error } = registerValidation(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
 	//check user in db 
 	const titleExist = await Books.findOne({bookstitle:req.body.bookstitle});
-	if (titleExist) return res.status(400).send("This bookstitle alredy exists");
+	if (titleExist) return res.status(400).json({message:"This bookstitle alredy exists"});
 	next();
 });
 
 // for Edit / Update Book status-work!(only POST methods?)
-app.put("/edit/:id", function(req, res,next){
+app.post("/edit/:id", function(req, res,next){
   const bookid = req.params.id;
   Books.updateOne( {_id:bookid}, { $set:{
   	author:req.body.author,
@@ -124,7 +127,7 @@ app.delete("/delete/:id", function(req, res){
   Books.deleteOne({_id:bookid}).then(() => {
     /*res.redirect("/");*/
   }).catch(err=>console.log(err));
-  console.log(" Delete  is done");
+  console.log("Delete  is done");
 });
 
 app.listen(port, function () {
